@@ -36,7 +36,7 @@ def twitter_crawler(keyword):
         c.Limit = 10
         twint.run.Search(c)
         df = twint.storage.panda.Tweets_df
-        store_in_es(df.to_json(orient='index'),'mtwitter')
+        store_in_es(df.to_json(orient='index'),'twitter')
     except:
         print("Error in twitter crawler")
 
@@ -98,7 +98,7 @@ def get_twitter_data(keyword):
     try:
         result=[]
         es = es_connect()
-        dt=es.search(index='mtwitter', body={"query":{"match":{"tweet":str(keyword)}}})
+        dt=es.search(index='twitter', body={"query":{"match":{"tweet":str(keyword)}}})
         for i in dt['hits']['hits']:
             result.append(i['_source'])
         return result
